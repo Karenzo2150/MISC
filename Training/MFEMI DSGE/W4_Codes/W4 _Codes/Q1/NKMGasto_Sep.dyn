@@ -1,0 +1,142 @@
+% New Keynesian model without capital 
+% Adjust monetary policy reaction
+% Adjust nominal rigidities
+% Andres Gonzalez (agonzalez@imf.org)
+
+close all;
+
+var lambda;
+var c;
+var n;
+var w;
+var y ; 
+var R  ;  
+var infT;   
+var mc   ; 
+var prof  ;
+var g ;
+    
+parameters
+chi 
+theta 
+phi_c 
+betta
+g_bar 
+rho_g
+kappa
+eps
+inf_bar
+Rbar
+rho_pi
+rho_za;
+
+
+betta = 1/(1+0.04)^0.25;
+phi_c  = 1;
+eps = 6;
+theta_c = 2/3;
+kappa   = 40;%0; %theta_c*(eps-1)/((1-theta_c)*(1-theta_c*betta));
+g_bar = 0.2; 
+theta= ((eps-1)/eps)*(1-g_bar)^-phi_c;
+chi  = 1;
+rho_g = 0.8;
+inf_bar = 1.03^(1/4);
+Rbar   = inf_bar/betta;
+rho_pi  = 1.5;
+rho_za = 0.9;
+%theta*(exp(n))^(chi) = exp(w); %*exp(lambda);
+
+ 
+varexo sh_G sh_R;
+
+model;
+# cr1 = exp(infT)/inf_bar;
+# cr2 = exp(infT(+1))/inf_bar;
+
+%% Marginal Utility of Consumption (1)
+exp(lambda) = (exp(c))^-phi_c;
+
+% - (theta/(1+chi))*(exp(n))^(1+chi))^-phi_c;
+
+%% Euler equation (2)
+exp(lambda) = betta*exp(lambda(+1))*(exp(R)/exp(infT(+1)));
+
+%% Labor supply (3)
+theta*(exp(n))^(chi) = exp(w)*exp(lambda);
+
+%% Labor demand (4)
+exp(w)  = exp(mc);
+
+%% Philliops curve
+% Eq 11 Phillips curve Rotember pricing
+0 = ((1-eps) + eps*exp(mc))-kappa*exp(infT)*(cr1 - 1)*cr1 + 
+betta*(exp(lambda(+1))/exp(lambda))*kappa*(cr2 - 1)*cr2*exp(infT(+1))*exp(y(+1))/exp(y);
+
+%% Production function (6)
+exp(y) = exp(n);
+
+%%Resource constraint (7) 
+exp(c)+exp(g) = exp(y) - exp(y)*(kappa/2)*(cr1-1)^2; 
+
+% % Taylor Rule (8)
+exp(R) =Rbar*(exp(infT)/inf_bar)^(rho_pi)*exp(sh_R);
+
+%%% Government expenditure  (9)
+g = rho_g*g(-1) + (1-rho_g)*log(g_bar) + sh_G;
+
+%% Definitions 
+% Profits (11)
+exp(prof) = exp(y) - exp(w)*exp(n) - exp(y)*(kappa/2)*(cr1-1)^2; 
+
+end;
+
+initval;
+% Model with nominal rigidities 
+
+%% Demanda laboral (5)
+n = log(1);
+y = log(exp(n));
+g = log(g_bar);
+infT = log(inf_bar);
+R   = log(Rbar);
+mc = log((eps-1)/eps);
+w = log(exp(mc));
+prof = log(1 - exp(w)); 
+c = log(exp(y)-exp(g));
+lambda = log( (exp(c))^-phi_c);
+end;
+
+resid;
+steady;
+check;
+
+shocks;
+  var sh_G ; stderr 1; //stderr 1/g_bar;
+%  var sh_za ; stderr 1.0;
+% %   var sh_i_t ; stderr 1.0;
+end;
+
+
+%stoch_simul(order=1,irf=50,  noprint, nograph);
+stoch_simul(order=1,irf=50, noprint);
+
+
+% Fiscal multipliers
+Rgov_real=Rbar/inf_bar; %Long run real interest rate
+disc=1/Rgov_real;
+disc_vec=disc.^[0:1:length(g_sh_G)-1];
+
+mult_cum = cumsum(y_sh_G)./cumsum(g_sh_G*g_bar); 
+mult_pv=cumsum(disc_vec'.*y_sh_G)./cumsum(disc_vec'.*(g_sh_G*g_bar));
+
+disp(' ');
+disp('Fiscal Multipliers:');
+disp('-------------------------------------------------------------------------------------------------------------');
+fprintf('                                            1Q     4Q     8Q     16Q     20Q     Inf     Max     Min\n' );
+fprintf(['PV Fiscal Multipliers                    : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n'],...
+        mult_pv(1),mult_pv(4),mult_pv(8),mult_pv(16),mult_pv(20),mult_pv(end),max(mult_pv),min(mult_pv));
+
+fprintf('Cumulative Fiscal Multipliers            : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n',...
+        mult_cum(1),mult_cum(4),mult_cum(8),mult_cum(16),mult_cum(20),mult_cum(end),max(mult_cum),min(mult_cum));
+disp('-------------------------------------------------------------------------------------------------------------');
+disp(' ');

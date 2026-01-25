@@ -1,0 +1,106 @@
+Starting Dynare (version 4.5.7).
+Starting preprocessing of the model file ...
+Found 23 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+Processing outputs ...
+done
+Preprocessing completed.
+
+
+
+
+Residuals of the static equations:
+
+Equation number 1 : 0
+Equation number 2 : 0
+Equation number 3 : 0
+Equation number 4 : 0
+Equation number 5 : 0
+Equation number 6 : 0
+Equation number 7 : 0
+Equation number 8 : 0
+Equation number 9 : 0
+Equation number 10 : 0
+Equation number 11 : 0
+Equation number 12 : 0
+Equation number 13 : 0
+Equation number 14 : 0
+Equation number 15 : 0
+Equation number 16 : 0
+Equation number 17 : 0
+Equation number 18 : 0
+Equation number 19 : 0
+Equation number 20 : 0
+Equation number 21 : 0
+Equation number 22 : 0
+Equation number 23 : 0
+
+
+
+STEADY-STATE RESULTS:
+
+lambda 		 0.788059
+c      		 -0.356675
+n      		 -1.20397
+w      		 0.694077
+y      		 0
+R      		 0.0171949
+infT   		 0.0073897
+mc     		 -0.182322
+prof   		 -1.79176
+x      		 -1.83258
+k      		 1.89239
+Qx     		 0
+rk     		 -3.35008
+g      		 -1.96611
+zY     		 0.339065
+taxK   		 -4.90691
+taxL   		 -4.42192
+taxC   		 -3.01593
+tauK   		 0.1
+tauL   		 0.02
+tauC   		 0.07
+tr     		 -0.0715935
+bg     		 0
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+               0                0                0
+               0               -0                0
+               0                0                0
+               0                0                0
+       2.079e-32        2.079e-32                0
+       5.409e-17       -5.409e-17                0
+       5.794e-16       -5.794e-16                0
+          0.3668           0.3668                0
+             0.8              0.8                0
+             0.9              0.9                0
+          0.9763           0.9763                0
+           1.047            1.047                0
+           1.699            1.618           0.5177
+           1.699            1.618          -0.5177
+           1.714           -1.714                0
+       1.388e+16       -1.388e+16                0
+       3.536e+16        3.536e+16                0
+             Inf             -Inf                0
+
+
+There are 7 eigenvalue(s) larger than 1 in modulus 
+for 7 forward-looking variable(s)
+
+The rank condition is verified.
+
+ 
+Government expenditure Fiscal Multipliers:
+-------------------------------------------------------------------------------------------------------------
+                                            1Q     4Q     8Q     16Q     20Q     Inf     Max     Min
+PV Fiscal Multipliers                    : 0.70	 0.27	0.03	-0.28	-0.41	-0.41	0.70	-0.41
+Cumulative Fiscal Multipliers            : 0.70	 0.26	0.02	-0.31	-0.46	-0.46	0.70	-0.46
+-------------------------------------------------------------------------------------------------------------
+ 
+Total computing time : 0h00m01s

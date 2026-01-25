@@ -1,0 +1,416 @@
+% Simple new Keynesian model with capital
+% Labor market structure: Competitive labor market   
+% Distortionary taxes
+% Author: Andres Gonzalez
+% email: agonzalez@imf.org
+
+var lambda;
+var c;     
+var n ;    
+var w;   
+var y;
+var R;    
+var infT;   
+var mc;   
+var prof;  
+var x; 
+var k; 
+var Qx; 
+var rk;
+var g; 
+var zY;
+var taxK; 
+var taxL; 
+var taxC; 
+var tauK;
+var tauL;
+var tauC;
+var tr; 
+var bg;
+
+varexo sh_G;
+varexo sh_R;
+varexo sh_zY;
+varexo sh_tauL;
+varexo sh_tauK;
+varexo sh_tauC;
+
+parameters sigma_c;
+parameters chi; 
+parameters thetaL; 
+parameters betta;
+parameters gbar;
+parameters rhog;
+parameters kappa;
+parameters iota_n;
+parameters eps;
+parameters inf_bar;
+parameters Rbar;
+parameters rho_pi;
+parameters rhozY;
+parameters a;
+parameters alfa;
+parameters del;
+parameters rhoTauL;
+parameters rhoTauK;
+parameters rhoTauC;
+parameters phib_tr;
+
+% Parameters defining the steady state of the model
+parameters lambdaSS;
+parameters cSS;     
+parameters nSS ;    
+parameters wSS;   
+parameters ySS;
+parameters mcSS;   
+parameters profSS;  
+parameters xSS; 
+parameters kSS; 
+parameters rkSS;
+parameters zYSS; 
+parameters tauKSS;
+parameters tauCSS;
+parameters tauLSS;
+parameters bgSS;
+parameters taxKSS;
+parameters taxLSS; 
+parameters taxCSS; 
+parameters trSS; 
+parameters x_y, k_y;
+
+betta = 1/(1+0.04)^0.25;
+inf_bar = 1.03^(1/4);
+sigma_c = 1;
+chi  = 1;
+gbar = 0.14; 
+rhog = 0.8;
+iota_n  = 0.0;
+eps = 6;
+theta_c = 2/3;
+kappa   = theta_c*(eps-1)/((1-theta_c)*(1-theta_c*betta));
+calvoSlope = (eps-1)/kappa;
+del = (1+0.10)^(0.25)-1;
+a = 0.6;
+rho_pi  = 1.5;
+rhozY = 0.9;
+x_y = 0.16;
+rhoTauL=0;
+rhoTauK=0;
+rhoTauC=0;
+
+tauKSS = 0.10;
+tauCSS = 0.07;
+tauLSS = 0.02;
+bgSS = 0;
+phib_tr = 0.3; 
+
+% Steady state of the model
+Rbar   = inf_bar/betta;
+ySS = 1;
+nSS = 0.3;
+QxSS = 1;
+mcSS = (eps-1)/eps; 
+rkSS = (1/betta - (1-del)-tauKSS*del/inf_bar)/(1-tauKSS);
+k_y = x_y/del;
+alfa = rkSS*(k_y)*(1/mcSS);
+kSS =  k_y*ySS;
+zYSS = kSS^(-alfa)*nSS^-(1-alfa);
+xSS = del*kSS;
+cSS = (1 - x_y - gbar/ySS)*ySS;
+wSS = (1 - alfa)*mcSS*ySS/nSS;
+thetaL = (((1-tauLSS)/(1+tauCSS))*wSS)/(nSS^(chi));
+lambdaSS = ((cSS - (thetaL/(1+chi))*(nSS)^(1+chi))^-sigma_c)/(1+tauCSS);
+profSS = (1-mcSS)*ySS;
+taxKSS = tauKSS*(rkSS - del/inf_bar)*kSS; 
+taxLSS = tauLSS*wSS*nSS; 
+taxCSS = tauCSS*cSS; 
+trSS = (taxKSS + taxLSS + taxCSS + bgSS)- gbar + (Rbar/inf_bar)*bgSS;
+
+model;
+% Rotemberg costs
+# cr1 = exp(infT)/((exp(infT(-1))^iota_n)*(inf_bar^(1-iota_n)));
+# cr2 = exp(infT(+1))/((exp(infT)^iota_n)*(inf_bar^(1-iota_n)));
+
+% Investment cost
+# sinv  = 0.5*a*(exp(x)/exp(x(-1))-1)^2;
+# dsinv = a*(exp(x)/exp(x(-1))-1)*(exp(x)/exp(x(-1)));
+# dsinvP= a*(exp(x(+1))/exp(x)-1)*(exp(x(+1))/exp(x))^2;
+
+%% Eq 1 Marginal utility consumption
+(1+tauC)*exp(lambda) = (exp(c) - (thetaL/(1+chi))*(exp(n))^(1+chi))^-sigma_c;
+
+%% Eq 2 Euler equation
+exp(lambda) = betta*exp(lambda(+1))*(exp(R)/exp(infT(+1)));
+
+%% Eq 3 Labor Supply 
+thetaL*(exp(n))^(chi) = ((1-tauL)/(1+tauC))*exp(w);
+
+%% Eq 4 Capital accumulation equation 
+exp(k) = (1-del)*exp(k(-1)) + exp(x)*(1-sinv);
+
+%% Eq 5 Capital first order condition
+exp(Qx) =  betta*(exp(lambda(+1))/exp(lambda))*((1-tauK(+1))*exp(rk(+1)) +  tauK(+1)*del*(exp(Qx)/exp(infT(+1)))  + exp(Qx(+1))*(1-del));
+
+
+%% Eq 6 Investment fisrt order condition
+1 = exp(Qx)*( 1- sinv - dsinv*exp(x))- 
+         betta*(exp(lambda(+1))/exp(lambda))*(exp(Qx(+1))*dsinvP*(exp(x(+1))));
+
+%% Eq 7 Labor demand 
+exp(w)  = (1-alfa)*exp(mc)*exp(y)/exp(n);
+
+%% Eq 8 Capital demand 
+exp(rk)  = alfa*exp(mc)*exp(y)/exp(k(-1));
+
+%% Eq 9 Optimal price 
+% Eq 11 Phillips curve Rotember pricing
+0 = ((1-eps) + eps*exp(mc))-kappa*exp(infT)*(cr1 - 1)*cr1 + 
+betta*(exp(lambda(+1))/exp(lambda))*kappa*(cr2 - 1)*cr2*exp(infT(+1))*exp(y(+1))/exp(y);
+
+%% Eq 10  Profits
+exp(prof) = (1-exp(mc))*exp(y)-exp(y)*(kappa/2)*(cr1-1)^2; 
+
+%% Eq 11 Production function
+exp(y) = exp(zY)*exp(n)^(1-alfa)*exp(k(-1))^(alfa);
+
+%% Eq 12 Agregate resource constraint
+exp(c)+exp(x)+exp(g) = exp(w)*exp(n) + exp(rk)*exp(k(-1)) + exp(prof);
+
+%% Eq 13 Taylor Rule
+exp(R) =Rbar*(exp(infT)/inf_bar)^(rho_pi)*exp(sh_R);
+
+%% Eq 14 Goverment expenditure shock 
+g = rhog*g(-1) + (1-rhog)*log(gbar) + sh_G;
+
+%Taxes revenues
+%% Eq 15  
+exp(taxK) = tauK*(exp(rk) - del*exp(Qx(-1))/exp(infT))*exp(k(-1)); 
+  
+%% Eq 16 
+exp(taxL) = tauL*exp(w)*exp(n); 
+  
+%% Eq 17  
+exp(taxC) = tauC*exp(c); 
+
+%% Fiscal rules 
+
+%% Eq 18 
+tauL = (1-rhoTauL)*tauLSS + rhoTauL*tauL(-1) + sh_tauL;
+%tauL = tauLSS + phib_tr*(bg-bgSS);% 
+%tauL = tauLSS + phib_tr*(bg-bgSS)+sh_tauL;% 
+
+%% Eq 19 
+tauK = (1-rhoTauK)*tauKSS + rhoTauK*tauK(-1) + sh_tauK;
+
+%% Eq 20 
+tauC = (1-rhoTauC)*tauCSS + rhoTauC*tauC(-1) + sh_tauC;
+    
+%% Eq 21 
+%tr = trSS-phib_tr*(bg-bgSS);
+%tr = trSS;
+bg = bgSS;
+
+% Eq 22 Government budget constrainst 
+exp(taxK) + exp(taxL) + exp(taxC) + bg = exp(g) + (exp(R(-1))/exp(infT))*bg(-1) + tr; 
+
+%% Eq 23  Goverment expenditure shock (16)
+zY = (1-rhozY)*log(zYSS) + rhozY*zY(-1)+ sh_zY;
+
+end;
+
+initval;
+% Model with nominal rigidities 
+
+lambda = log(lambdaSS);
+c = log(cSS);     
+n = log(nSS);    
+w = log(wSS);   
+y = log(ySS);
+R = log(Rbar);    
+infT = log(inf_bar);   
+mc = log(mcSS);   
+prof = log(profSS);   
+x = log(xSS); 
+k = log(kSS); 
+Qx = log(QxSS); 
+rk = log(rkSS);
+g  = log(gbar); 
+tr = trSS;
+tauL = tauLSS;
+tauK = tauKSS;
+tauC = tauCSS;
+bg = bgSS;
+taxK = log(taxKSS); 
+taxL = log(taxLSS);
+taxC = log(taxCSS); 
+zY = log(zYSS);
+end;
+
+resid;
+steady;
+check;
+
+shocks;
+var sh_G ; stderr 1; //stderr 1/gbar;
+% var sh_za ; stderr 1.0;
+%   var sh_i_t ; stderr 1.0;
+end;
+
+
+stoch_simul(order=1,irf=20, noprint, nograph);
+
+
+% Fiscal multipliers
+Rgov_real=Rbar/inf_bar; %Long run real interest rate
+disc=1/Rgov_real;
+disc_vec=disc.^[0:1:length(g_sh_G)-1];
+
+mult_cum = cumsum(y_sh_G)./cumsum(g_sh_G*gbar); 
+mult_pv=cumsum(disc_vec'.*y_sh_G)./cumsum(disc_vec'.*(g_sh_G*gbar));
+
+disp(' ');
+disp('Government expenditure Fiscal Multipliers:');
+disp('-------------------------------------------------------------------------------------------------------------');
+fprintf('                                            1Q     4Q     8Q     16Q     20Q     Inf     Max     Min\n' );
+fprintf(['PV Fiscal Multipliers                    : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n'],...
+        mult_pv(1),mult_pv(4),mult_pv(8),mult_pv(16),mult_pv(20),mult_pv(end),max(mult_pv),min(mult_pv));
+
+fprintf('Cumulative Fiscal Multipliers            : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n',...
+        mult_cum(1),mult_cum(4),mult_cum(8),mult_cum(16),mult_cum(20),mult_cum(end),max(mult_cum),min(mult_cum));
+disp('-------------------------------------------------------------------------------------------------------------');
+disp(' ');
+
+
+
+w_sh_G(abs(w_sh_G)<1e-8)=0;
+y_sh_G(abs(y_sh_G)<1e-8)=0;
+c_sh_G(abs(c_sh_G)<1e-8)=0;
+n_sh_G(abs(n_sh_G)<1e-8)=0;
+g_sh_G(abs(g_sh_G)<1e-8)=0;
+x_sh_G(abs(x_sh_G)<1e-8)=0;
+prof_sh_G(abs(prof_sh_G)<1e-8)=0;
+
+wn_sh_G = wSS*w_sh_G+nSS*n_sh_G;
+tax_sh_G = taxK_sh_G + taxL_sh_G + taxC_sh_G - tr_sh_G;
+
+
+figure()
+T = size(c_sh_G ,1);
+t = 1:1:T;
+subplot(3,2,1);
+plot(t',(cSS/ySS)*c_sh_G,'b-', t', (gbar/ySS)*g_sh_G, 'r-', t', (xSS/ySS)*x_sh_G, 'g-', t', y_sh_G, 'k-',  'LineWidth',2)
+title(['Consumption y Gov. Expen'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Consumption', 'Gov. Expen', 'Investment', 'Output');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,2);
+pl=plot(t',infT_sh_G', t',R_sh_G');
+title(['Inflation, Interest Rates'],'FontSize',8,'FontWeight','bold');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Inflation', 'Interest rates');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,3);
+pl=plot(t',rk_sh_G, t',w_sh_G');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+title(['Rental rate of capital and real wage'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+legend ('Rent of Capital', 'Real Wages');
+set(gca,'Fontsize',8);
+xlim([1 T]);
+grid on;
+
+subplot(3,2,4);
+plot(t',n_sh_G,'b-','LineWidth',2)
+title(['Labor'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+xlim([1 T]);
+grid on;
+
+subplot(3,2,5);
+pl=plot(t',wn_sh_G', t',prof_sh_G');
+title(['Wage bill and Profits'],'FontSize',8,'FontWeight','bold');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Wage bill','Profits');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,5);
+pl=plot(t',g_sh_G', t',tax_sh_G',t',bg_sh_G');
+title(['Government'],'FontSize',8,'FontWeight','bold');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+pl(3).LineWidth = 2;
+pl(3).Color='red';
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Gov. Exp','Tax Rev', 'Public Debt');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,6);
+pl=plot(t',taxK_sh_G', t',taxL_sh_G',t',taxC_sh_G', t',tr_sh_G');
+title(['Taxes'],'FontSize',8,'FontWeight','bold');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+pl(3).LineWidth = 2;
+pl(3).Color='green';
+pl(4).LineWidth = 2;
+pl(4).Color='red';
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Capital','Labor','Consumption', 'Transfers');
+xlim([1 T]);
+grid on;
+
+
+
+
+% 
+% % 
+%%print -dpdf NKM_GHH_DistTaxes_laboxTax_Nobb.pdf
+% % 
+% % 
+% % 
+% % % irfsGap = zeros(50,1)
+% % % irfsInf = zeros(50,1)
+% % % mus = 0:10:166;
+% % % for i=1:length(mus);
+% % % kappa = mus(i);
+% % % stoch_simul(order=1,irf=50,  noprint, nograph) c_t y_t w_t n_t g_t prof_t inf_t i_t ygap wF_t za;
+% % % if info;
+% % %     disp(['Computation fails for rho = ' num2str(rho)]);
+% % % end;
+% % %  irfsGap = [irfsGap oo_.irfs.ygap_sh_za'];
+% % %  irfsInf = [irfsInf oo_.irfs.inf_t_sh_za'];   
+% % % end;
+% % % 
+% % % figure()
+% % % subplot(1,2,1)
+% % %  plot(irfsGap(:,2:end))
+% % % subplot(1,2,2)
+% % %  plot(irfsInf(:,2:end))
+% % 
+% % 

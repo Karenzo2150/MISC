@@ -1,0 +1,215 @@
+Starting Dynare (version 4.5.7).
+Starting preprocessing of the model file ...
+Found 9 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+Processing outputs ...
+done
+Preprocessing completed.
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+            0.95             0.95                0
+          0.9663           0.9663                0
+           1.045            1.045                0
+       1.182e+19        1.182e+19                0
+
+
+There are 2 eigenvalue(s) larger than 1 in modulus 
+for 2 forward-looking variable(s)
+
+The rank condition is verified.
+
+
+STEADY-STATE RESULTS:
+
+z  		 0
+k  		 24.694
+c  		 1.33036
+n  		 0.313068
+i  		 0.466114
+y  		 1.79647
+w  		 3.44296
+r  		 0.0290997
+yn 		 5.73827
+
+MODEL SUMMARY
+
+  Number of variables:         9
+  Number of stochastic shocks: 1
+  Number of state variables:   2
+  Number of jumpers:           2
+  Number of static variables:  5
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.000049
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               c               i               k               n               w               r               z              yn
+Constant                    1.796471        1.330358        0.466114       24.694026        0.313068        3.442963        0.029100               0        5.738272
+z(-1)                       2.508644        0.416777        2.091867        2.077583        0.232938        2.246123        0.040636        0.950000        3.743538
+k(-1)                       0.018091        0.033176       -0.015085        0.966272       -0.003197        0.069835       -0.000885               0        0.116392
+e                           2.640678        0.438713        2.201965        2.186929        0.245198        2.364340        0.042774        1.000000        3.940567
+
+
+THEORETICAL MOMENTS (HP filter, lambda = 1600)
+VARIABLE         MEAN  STD. DEV.   VARIANCE
+y              1.7965     0.0241     0.0006
+c              1.3304     0.0046     0.0000
+i              0.4661     0.0201     0.0004
+k             24.6940     0.0711     0.0051
+n              0.3131     0.0023     0.0000
+w              3.4430     0.0220     0.0005
+r              0.0291     0.0004     0.0000
+z              0.0000     0.0091     0.0001
+yn             5.7383     0.0367     0.0013
+
+
+
+MATRIX OF CORRELATIONS (HP filter, lambda = 1600)
+Variables         y       c       i       k       n       w       r       z      yn
+y            1.0000  0.8847  0.9943  0.3097  0.9881  0.9849  0.9775  0.9986  0.9849
+c            0.8847  1.0000  0.8300  0.7173  0.8024  0.9520  0.7663  0.8585  0.9520
+i            0.9943  0.8300  1.0000  0.2067  0.9989  0.9609  0.9944  0.9986  0.9609
+k            0.3097  0.7173  0.2067  1.0000  0.1597  0.4696  0.1019  0.2585  0.4696
+n            0.9881  0.8024  0.9989  0.1597  1.0000  0.9466  0.9983  0.9949  0.9466
+w            0.9849  0.9520  0.9609  0.4696  0.9466  1.0000  0.9262  0.9743  1.0000
+r            0.9775  0.7663  0.9944  0.1019  0.9983  0.9262  1.0000  0.9873  0.9262
+z            0.9986  0.8585  0.9986  0.2585  0.9949  0.9743  0.9873  1.0000  0.9743
+yn           0.9849  0.9520  0.9609  0.4696  0.9466  1.0000  0.9262  0.9743  1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION (HP filter, lambda = 1600)
+Order         1       2       3       4       5
+y        0.7172  0.4774  0.2784  0.1172 -0.0096
+c        0.8051  0.6169  0.4413  0.2821  0.1418
+i        0.7108  0.4672  0.2664  0.1051 -0.0206
+k        0.9598  0.8627  0.7282  0.5725  0.4085
+n        0.7097  0.4655  0.2645  0.1032 -0.0224
+w        0.7391  0.5122  0.3190  0.1583  0.0282
+r        0.7101  0.4661  0.2651  0.1038 -0.0219
+z        0.7133  0.4711  0.2711  0.1098 -0.0163
+yn       0.7391  0.5122  0.3190  0.1583  0.0282
+
+
+Relative standard deviations in %
+VARIABLE    REL. S.D.
+y              1.3414
+c              0.3457
+i              4.3217
+k              0.2880
+n              0.7199
+w              0.6397
+r              1.3634
+z                 Inf
+yn             0.6397
+Total computing time : 0h00m01s
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+            0.95             0.95                0
+          0.9663           0.9663                0
+           1.045            1.045                0
+       1.182e+19        1.182e+19                0
+
+
+There are 2 eigenvalue(s) larger than 1 in modulus 
+for 2 forward-looking variable(s)
+
+The rank condition is verified.
+
+
+STEADY-STATE RESULTS:
+
+z  		 0
+k  		 24.694
+c  		 1.33036
+n  		 0.313068
+i  		 0.466114
+y  		 1.79647
+w  		 3.44296
+r  		 0.0290997
+yn 		 5.73827
+
+MODEL SUMMARY
+
+  Number of variables:         9
+  Number of stochastic shocks: 1
+  Number of state variables:   2
+  Number of jumpers:           2
+  Number of static variables:  5
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.000049
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               c               i               k               n               w               r               z              yn
+Constant                    1.796471        1.330358        0.466114       24.694026        0.313068        3.442963        0.029100               0        5.738272
+z(-1)                       2.508644        0.416777        2.091867        2.077583        0.232938        2.246123        0.040636        0.950000        3.743538
+k(-1)                       0.018091        0.033176       -0.015085        0.966272       -0.003197        0.069835       -0.000885               0        0.116392
+e                           2.640678        0.438713        2.201965        2.186929        0.245198        2.364340        0.042774        1.000000        3.940567
+
+
+THEORETICAL MOMENTS (HP filter, lambda = 1600)
+VARIABLE         MEAN  STD. DEV.   VARIANCE
+y              1.7965     0.0241     0.0006
+c              1.3304     0.0046     0.0000
+i              0.4661     0.0201     0.0004
+k             24.6940     0.0711     0.0051
+n              0.3131     0.0023     0.0000
+w              3.4430     0.0220     0.0005
+r              0.0291     0.0004     0.0000
+z              0.0000     0.0091     0.0001
+yn             5.7383     0.0367     0.0013
+
+
+
+MATRIX OF CORRELATIONS (HP filter, lambda = 1600)
+Variables         y       c       i       k       n       w       r       z      yn
+y            1.0000  0.8847  0.9943  0.3097  0.9881  0.9849  0.9775  0.9986  0.9849
+c            0.8847  1.0000  0.8300  0.7173  0.8024  0.9520  0.7663  0.8585  0.9520
+i            0.9943  0.8300  1.0000  0.2067  0.9989  0.9609  0.9944  0.9986  0.9609
+k            0.3097  0.7173  0.2067  1.0000  0.1597  0.4696  0.1019  0.2585  0.4696
+n            0.9881  0.8024  0.9989  0.1597  1.0000  0.9466  0.9983  0.9949  0.9466
+w            0.9849  0.9520  0.9609  0.4696  0.9466  1.0000  0.9262  0.9743  1.0000
+r            0.9775  0.7663  0.9944  0.1019  0.9983  0.9262  1.0000  0.9873  0.9262
+z            0.9986  0.8585  0.9986  0.2585  0.9949  0.9743  0.9873  1.0000  0.9743
+yn           0.9849  0.9520  0.9609  0.4696  0.9466  1.0000  0.9262  0.9743  1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION (HP filter, lambda = 1600)
+Order         1       2       3       4       5
+y        0.7172  0.4774  0.2784  0.1172 -0.0096
+c        0.8051  0.6169  0.4413  0.2821  0.1418
+i        0.7108  0.4672  0.2664  0.1051 -0.0206
+k        0.9598  0.8627  0.7282  0.5725  0.4085
+n        0.7097  0.4655  0.2645  0.1032 -0.0224
+w        0.7391  0.5122  0.3190  0.1583  0.0282
+r        0.7101  0.4661  0.2651  0.1038 -0.0219
+z        0.7133  0.4711  0.2711  0.1098 -0.0163
+yn       0.7391  0.5122  0.3190  0.1583  0.0282
+
+
+Relative standard deviations in %
+VARIABLE    REL. S.D.
+y              1.3414
+c              0.3457
+i              4.3217
+k              0.2880
+n              0.7199
+w              0.6397
+r              1.3634
+z                 Inf
+yn             0.6397
+Total computing time : 0h00m01s

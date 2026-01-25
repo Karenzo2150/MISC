@@ -1,0 +1,157 @@
+Starting Dynare (version 4.5.7).
+Starting preprocessing of the model file ...
+Found 13 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+ - order 2
+Processing outputs ...
+done
+Preprocessing completed.
+[Warning: Some of the parameters have no value
+(OMEGA) when using steady. If these parameters are
+not initialized in a steadystate file or a
+steady_state_model-block, Dynare may not be able
+to solve the model...] 
+
+STEADY-STATE RESULTS:
+
+X      		 0
+MC     		 0
+W      		 0
+PI     		 0
+INT    		 0
+YN     		 0
+RN     		 0
+Y      		 0
+L      		 0
+A      		 0
+XI_C   		 0
+XI_PI  		 0
+XI_INT 		 0
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+            0.75             0.75                0
+            0.85             0.85                0
+            0.85             0.85                0
+             0.9              0.9                0
+           1.151            1.066           0.4323
+           1.151            1.066          -0.4323
+       1.165e+18        1.165e+18                0
+             Inf             -Inf                0
+
+
+There are 4 eigenvalue(s) larger than 1 in modulus 
+for 4 forward-looking variable(s)
+
+The rank condition is verified.
+
+[Warning: Some of the parameters have no value
+(OMEGA) when using stoch_simul. If these
+parameters are not initialized in a steadystate
+file or a steady_state_model-block, Dynare may not
+be able to solve the model...] 
+
+MODEL SUMMARY
+
+  Number of variables:         13
+  Number of stochastic shocks: 4
+  Number of state variables:   4
+  Number of jumpers:           4
+  Number of static variables:  6
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables       EPS_A     EPS_C    EPS_PI   EPS_INT
+EPS_A        1.000000  0.000000  0.000000  0.000000
+EPS_C        0.000000  1.000000  0.000000  0.000000
+EPS_PI       0.000000  0.000000  1.000000  0.000000
+EPS_INT      0.000000  0.000000  0.000000  1.000000
+
+POLICY AND TRANSITION FUNCTIONS
+                                   X              MC               W              PI             INT              YN              RN               Y               L               A            XI_C           XI_PI          XI_INT
+A(-1)                      -0.029375       -0.088124        0.811876       -0.071328       -0.178320        0.600000       -0.120000        0.570625       -0.329375        0.900000               0               0               0
+XI_PI(-1)                  -2.298851       -6.896552       -6.896552        0.656814        1.642036               0               0       -2.298851       -2.298851               0               0        0.750000               0
+XI_INT(-1)                 -0.281985       -0.845955       -0.845955       -0.463881       -0.309704               0               0       -0.281985       -0.281985               0               0               0        0.850000
+XI_C(-1)                    0.042298        0.126893        0.126893        0.069582        0.173956               0        0.127500        0.042298        0.042298               0        0.850000               0               0
+EPS_A                      -0.032638       -0.097915        0.902085       -0.079254       -0.198134        0.666667       -0.133333        0.634028       -0.365972        1.000000               0               0               0
+EPS_C                       0.049762        0.149286        0.149286        0.081861        0.204654               0        0.150000        0.049762        0.049762               0        1.000000               0               0
+EPS_PI                     -3.065134       -9.195402       -9.195402        0.875753        2.189381               0               0       -3.065134       -3.065134               0               0        1.000000               0
+EPS_INT                    -0.331747       -0.995242       -0.995242       -0.545743       -0.364357               0               0       -0.331747       -0.331747               0               0               0        1.000000
+
+
+THEORETICAL MOMENTS
+VARIABLE         MEAN  STD. DEV.   VARIANCE
+X              0.0000     4.6782    21.8855
+MC             0.0000    14.0346   196.9697
+W              0.0000    14.1846   201.2022
+PI             0.0000     1.6981     2.8835
+INT            0.0000     3.4340    11.7923
+YN             0.0000     1.5294     2.3392
+RN             0.0000     0.4179     0.1746
+Y              0.0000     4.8985    23.9957
+L              0.0000     4.7524    22.5848
+A              0.0000     2.2942     5.2632
+XI_C           0.0000     1.8983     3.6036
+XI_PI          0.0000     1.5119     2.2857
+XI_INT         0.0000     1.8983     3.6036
+
+
+
+VARIANCE DECOMPOSITION (in percent)
+            EPS_A    EPS_C   EPS_PI  EPS_INT
+X            0.03     0.04    98.12     1.81
+MC           0.03     0.04    98.12     1.81
+W            2.13     0.04    96.06     1.77
+PI           1.15     0.84    60.79    37.22
+INT          1.75     1.28    92.91     4.06
+YN         100.00     0.00     0.00     0.00
+RN          53.57    46.43     0.00     0.00
+Y            8.82     0.04    89.49     1.65
+L            3.12     0.04    95.08     1.76
+A          100.00     0.00     0.00     0.00
+XI_C         0.00   100.00     0.00     0.00
+XI_PI        0.00     0.00   100.00     0.00
+XI_INT       0.00     0.00     0.00   100.00
+
+
+
+MATRIX OF CORRELATIONS
+Variables         X      MC       W      PI     INT      YN      RN       Y       L       A    XI_C   XI_PI  XI_INT
+X            1.0000  1.0000  0.9868 -0.6867 -0.9233 -0.0160  0.0255  0.9500  0.9870 -0.0160  0.0202 -0.9906 -0.1346
+MC           1.0000  1.0000  0.9868 -0.6867 -0.9233 -0.0160  0.0255  0.9500  0.9870 -0.0160  0.0202 -0.9906 -0.1346
+W            0.9868  0.9868  1.0000 -0.6967 -0.9349  0.1459 -0.0932  0.9880  0.9480  0.1459  0.0200 -0.9801 -0.1332
+PI          -0.6867 -0.6867 -0.6967  1.0000  0.8990 -0.1071  0.1407 -0.6892 -0.6587 -0.1071  0.0915  0.7797 -0.6101
+INT         -0.9233 -0.9233 -0.9349  0.8990  1.0000 -0.1324  0.1740 -0.9231 -0.8876 -0.1324  0.1131  0.9639 -0.2014
+YN          -0.0160 -0.0160  0.1459 -0.1071 -0.1324  1.0000 -0.7319  0.2969 -0.1767  1.0000  0.0000  0.0000  0.0000
+RN           0.0255  0.0255 -0.0932  0.1407  0.1740 -0.7319  1.0000 -0.2042  0.1429 -0.7319  0.6814  0.0000  0.0000
+Y            0.9500  0.9500  0.9880 -0.6892 -0.9231  0.2969 -0.2042  1.0000  0.8874  0.2969  0.0193 -0.9460 -0.1286
+L            0.9870  0.9870  0.9480 -0.6587 -0.8876 -0.1767  0.1429  0.8874  1.0000 -0.1767  0.0199 -0.9751 -0.1325
+A           -0.0160 -0.0160  0.1459 -0.1071 -0.1324  1.0000 -0.7319  0.2969 -0.1767  1.0000  0.0000  0.0000  0.0000
+XI_C         0.0202  0.0202  0.0200  0.0915  0.1131  0.0000  0.6814  0.0193  0.0199  0.0000  1.0000  0.0000  0.0000
+XI_PI       -0.9906 -0.9906 -0.9801  0.7797  0.9639  0.0000  0.0000 -0.9460 -0.9751  0.0000  0.0000  1.0000  0.0000
+XI_INT      -0.1346 -0.1346 -0.1332 -0.6101 -0.2014  0.0000  0.0000 -0.1286 -0.1325  0.0000  0.0000  0.0000  1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION
+Order          1       2       3       4       5
+X         0.7519  0.5655  0.4255  0.3203  0.2412
+MC        0.7519  0.5655  0.4255  0.3203  0.2412
+W         0.7550  0.5707  0.4319  0.3274  0.2486
+PI        0.7898  0.6262  0.4986  0.3985  0.3199
+INT       0.7580  0.5754  0.4375  0.3333  0.2545
+YN        0.9000  0.8100  0.7290  0.6561  0.5905
+RN        0.8768  0.7694  0.6757  0.5938  0.5223
+Y         0.7649  0.5870  0.4522  0.3498  0.2719
+L         0.7565  0.5731  0.4349  0.3307  0.2520
+A         0.9000  0.8100  0.7290  0.6561  0.5905
+XI_C      0.8500  0.7225  0.6141  0.5220  0.4437
+XI_PI     0.7500  0.5625  0.4219  0.3164  0.2373
+XI_INT    0.8500  0.7225  0.6141  0.5220  0.4437
+Total computing time : 0h00m01s
+Note: warning(s) encountered in MATLAB/Octave code

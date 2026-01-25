@@ -1,0 +1,63 @@
+Starting Dynare (version 4.5.7).
+Starting preprocessing of the model file ...
+WARNING: NKMGasto_GHH_Inves.dyn:54.12-14: Symbol wSS declared twice.
+Found 15 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+Processing outputs ...
+done
+Preprocessing completed.
+
+
+
+
+Residuals of the static equations:
+
+Equation number 1 : 0
+Equation number 2 : 0
+Equation number 3 : 0
+Equation number 4 : 0
+Equation number 5 : 0
+Equation number 6 : 0
+Equation number 7 : 0
+Equation number 8 : 0
+Equation number 9 : 0
+Equation number 10 : 0
+Equation number 11 : 0
+Equation number 12 : 0
+Equation number 13 : 0
+Equation number 14 : 0
+Equation number 15 : 0
+
+
+
+STEADY-STATE RESULTS:
+
+lambda 		 1.09058
+c      		 -0.446287
+n      		 -1.20397
+w      		 0.706316
+y      		 0
+R      		 0.0171949
+infT   		 0.0073897
+mc     		 -0.182322
+prof   		 -1.79176
+x      		 -1.83258
+k      		 1.89239
+Qx     		 0
+rk     		 -3.38236
+g      		 -1.60944
+zY     		 0.366543
+ 
+Fiscal Multipliers:
+-------------------------------------------------------------------------------------------------------------
+                                            1Q     4Q     8Q     16Q     20Q     Inf     Max     Min
+PV Fiscal Multipliers                    : 1.15	 0.79	0.48	0.11	-0.03	-0.03	1.15	-0.03
+Cumulative Fiscal Multipliers            : 1.15	 0.78	0.47	0.07	-0.09	-0.09	1.15	-0.09
+-------------------------------------------------------------------------------------------------------------
+ 
+Total computing time : 0h00m01s
+Note: 1 warning(s) encountered in the preprocessor

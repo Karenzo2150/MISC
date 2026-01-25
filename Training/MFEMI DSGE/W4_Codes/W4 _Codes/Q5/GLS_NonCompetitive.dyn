@@ -1,0 +1,378 @@
+% Based on Gali Lopez-Salido Valles (2007) Undertanding the fiscal
+% multiplier 
+% Labor market structure: Non-Competetitive labor market   
+% Author: Andres Gonzalez
+% email: agonzalez@imf.org
+
+
+var c_o; 
+var omega_o; 
+var R;
+var infT; 
+var rk; 
+var q;
+var ko;
+var xo;
+var w;
+var c_r;
+var mc;
+var y;
+var omega_r;
+var k;
+var n;
+var x;
+var c;
+var tax;
+var taxo;
+var taxr;
+%var taxrtilde; 
+
+% Shocks
+var zM;
+var zY;
+var g;
+var bg; 
+
+varexo sh_G; 
+varexo sh_zy; 
+varexo sh_zM; 
+
+parameters betta;
+parameters a;
+parameters del;
+parameters chi;
+parameters thetaL;
+parameters alfa;
+parameters kappa;
+parameters infbar;
+parameters psiPi;
+parameters rhoI;
+parameters lamb;
+parameters rhoG;
+parameters rhozy;
+parameters epsW;
+parameters gbar;
+parameters Rbar;
+parameters eps; 
+parameters rhozM;
+parameters bbar;
+parameters phib;
+parameters phig;
+
+
+% Steady state values as parameteres
+parameters nSS;
+parameters qSS;
+parameters mcSS; 
+parameters rkSS;
+parameters k_y;
+parameters ySS;
+parameters kSS;
+parameters xSS;
+parameters xoSS;
+parameters koSS;
+parameters cSS;
+parameters wSS;
+parameters zYSS;
+parameters taxoSS;
+parameters taxrSS;
+parameters taxSS;
+parameters omega_oSS;
+parameters omega_rSS;
+
+bbar = 0;
+hpar= 0.3;
+infbar = (1.03)^(1/4);
+x_y  = 0.16;
+gbar = 0.2;
+del = (1 +0.1)^0.25-1;
+lamb = 0.5;
+betta = 0.99; %1/real;
+real = 1/betta;
+Rbar = real*infbar; 
+a = 0.6;
+chi = 0.2;
+kappa = 77;
+psiPi= 1.5;
+rhoI  =0.0;
+rhoG  =0.9;
+rhozy = 0.9;
+gbar = 0.18;
+eps = 6; 
+epsW = 6; 
+rhozM = 0.0;
+phib =0.33;
+phig =0.01;
+
+% Solvind the steady state 
+
+nSS=0.3;
+qSS = 1;
+ySS = 1;
+mcSS = (eps-1)/eps; 
+rkSS = 1/betta - (1-del);
+k_y = x_y/del;
+alfa = rkSS*(k_y)*(1/mcSS);
+kSS =  k_y*ySS;
+zYSS = kSS^(-alfa)*nSS^-(1-alfa);
+xSS = del*kSS;
+xoSS = xSS/(1-lamb);
+koSS = kSS/(1-lamb);
+cSS = (1 - x_y - gbar/ySS)*ySS;
+wSS = (1 - alfa)*mcSS*ySS/nSS;
+thetaL= (epsW-1)*wSS/(epsW*(nSS^chi)*cSS);
+taxoSS = (wSS*(1-lamb)*nSS + rkSS*kSS + (ySS - mcSS*ySS) - (1-lamb)*cSS - xSS)/(1-lamb);
+taxrSS = (wSS*(lamb)*nSS - lamb*cSS)/lamb;
+taxSS = gbar;
+omega_oSS =  1/cSS;
+omega_rSS = 1/cSS;
+
+
+model;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Auxiliary expressions.  These simplify the equations without adding
+% additional variables.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+% Rotemberg costs
+# cr1 = exp(infT)/infbar;
+# cr2 = exp(infT(+1))/infbar;
+
+% Investment cost
+# sinv  = 0.5*a*(exp(xo)/exp(xo(-1))-1)^2;
+# dsinv = a*(exp(xo)/exp(xo(-1))-1)*(exp(xo)/exp(xo(-1)));
+# dsinvP= a*(exp(xo(+1))/exp(xo)-1)*(exp(xo(+1))/exp(xo))^2;
+         
+                   
+% Eq 1 Marginal Utility of consumption optimizers
+1/exp(c_o) = exp(omega_o);
+% Eq 2 Euler equation optimizers
+exp(omega_o) = exp(omega_o(+1))*betta*exp(R)/exp(infT(+1));
+% Eq 3 Optimility condition capital optimizers
+exp(q) =  betta*(exp(omega_o(+1))/exp(omega_o))*(exp(rk(+1)) + exp(q(+1))*(1-del));
+% Eq 4 Optimility condition investment 
+1 = exp(q)*( 1- sinv - dsinv) + betta*(exp(omega_o(+1))/exp(omega_o))*exp(q(+1))*dsinvP;
+% Eq 5 Capital accumulation equation 
+exp(ko) = (1-del)*exp(ko(-1)) + exp(xo)*(1-sinv);
+% Eq 6 Labor supply optmizers
+thetaL*(epsW/(epsW-1)) = exp(w)*(lamb/((exp(n)^chi)*exp(c_r)) + (1-lamb)/((exp(n)^chi)*exp(c_o)));
+% Eq 7 Marginal utility of consumption rule of Thumb consumers 
+1/exp(c_r) = exp(omega_r);
+% Eq 8  Resource constraint rule of thumbs
+exp(c_r) = exp(w)*exp(n) - taxr;   
+% Eq 9 Labor demand
+exp(w)  = (1-alfa)*exp(mc)*exp(y)/exp(n);
+% Eq 10 Demand of capital 
+exp(rk)  = alfa*exp(mc)*exp(y)/exp(k(-1));
+% Eq 11 Phillips curve Rotember pricing
+0 = ((1-eps) + eps*exp(mc))-kappa*exp(infT)*(cr1 - 1)*cr1 + 
+betta*(exp(omega_o(+1))/exp(omega_o))*kappa*(cr2 - 1)*cr2*exp(infT(+1))*exp(y(+1))/exp(y);
+% Eq 12 Taylor rule 
+exp(R)= (exp(R(-1)))^rhoI*(Rbar*( (exp(infT)/infbar) )^psiPi)^(1-rhoI)*exp(zM);      
+% Eq 13 Aggregate investment 
+exp(x) = (1-lamb)*exp(xo);
+% Eq 14 Aggregate capital 
+exp(k) = (1-lamb)*exp(ko);
+% Eq 15 Aggregare consumtion
+exp(c) = lamb*exp(c_r) + (1-lamb)*exp(c_o);
+% Eq 16 Aggregate labor
+%exp(n) = lamb*exp(n) + (1-lamb)*exp(n);
+% Eq 17  Production function 
+exp(y)   = exp(zY)*((exp(k(-1)))^alfa)*exp(n)^(1-alfa);
+% Eq 18  Government budget constraint 
+tax + bg  = g + exp(R(-1))/exp(infT)*bg(-1);
+% Eq 19  Tax paid by optimizers 
+tax = (1-lamb)*taxo + lamb*taxr; 
+
+% Eq 20  Tax paid by Rule of Thumb
+% There are interesting differences when taxes are payed by ricardian agents. 
+taxr   = taxrSS + phib*(bg-bbar) + phib*(g-gbar); 
+taxo   = taxoSS; 
+%bg = 0;
+
+% Eq 21 Domestic production 
+exp(y) = exp(c) + exp(x) + g + exp(y)*0.5*kappa*(cr1 - 1)^2;  
+% Eq 22 Rule of Thumb resource constraint 
+g = (1-rhoG)*gbar + rhoG*g(-1) + sh_G;
+% Eq 23 Rule of Thumb resource constraint 
+zY = (1-rhozy)*log(zYSS)+rhozy*zY(-1) + sh_zy;
+% Eq 24 Rule of Thumb resource constraint 
+zM = rhozM*zM(-1) + sh_zM;
+    
+end;
+
+
+initval;
+c_o =log(cSS); 
+omega_o =  log(omega_oSS);
+R = log(Rbar);
+infT= log(infbar);
+rk= log(rkSS); 
+q = log(1);
+ko = log(koSS);
+xo = log(xoSS);
+w = log(wSS);
+c_r = log(cSS);
+mc = log(mcSS);
+y = log(ySS);
+omega_r = log(omega_rSS);
+k = log(kSS);
+n= log(nSS);
+x =log(xSS);
+c = log(cSS);
+tax = gbar; %log(gbar); %log(taxSS);
+taxo = taxoSS;
+taxr = taxrSS;
+
+zM =log(1);
+zY =log(zYSS);
+g = gbar; %log(gbar);
+bg = bbar;
+%taxrtilde = 0; 
+end;
+resid;
+check;
+
+shocks;
+  var sh_G ; stderr 0.1;
+end;
+
+stoch_simul(order=1, irf=20, nograph) c c_r c_o y x rk w infT tax n g R bg infT; 
+
+% Fiscal multipliers
+Rgov_real=Rbar/infbar; %Long run real interest rate
+disc=1/Rgov_real;
+disc_vec=disc.^[0:1:length(g_sh_G)-1];
+
+%mult_cum = cumsum(y_sh_G)./cumsum(g_sh_G*gbar); 
+%mult_pv=cumsum(disc_vec'.*y_sh_G)./cumsum(disc_vec'.*(g_sh_G*gbar));
+
+mult_cum = cumsum(y_sh_G)./cumsum(g_sh_G); 
+mult_pv=cumsum(disc_vec'.*y_sh_G)./cumsum(disc_vec'.*(g_sh_G));
+
+
+disp(' ');
+disp('Government expenditure Fiscal Multipliers:');
+disp('-------------------------------------------------------------------------------------------------------------');
+fprintf('                                            1Q     4Q     8Q     16Q     20Q     Inf     Max     Min\n' );
+fprintf(['PV Fiscal Multipliers                    : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n'],...
+        mult_pv(1),mult_pv(4),mult_pv(8),mult_pv(16),mult_pv(20),mult_pv(end),max(mult_pv),min(mult_pv));
+
+fprintf('Cumulative Fiscal Multipliers            : %3.2f\t %3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\t%3.2f\n',...
+        mult_cum(1),mult_cum(4),mult_cum(8),mult_cum(16),mult_cum(20),mult_cum(end),max(mult_cum),min(mult_cum));
+disp('-------------------------------------------------------------------------------------------------------------');
+disp(' ');
+
+
+
+w_sh_G(abs(w_sh_G)<1e-14)=0;
+y_sh_G(abs(y_sh_G)<1e-14)=0;
+c_sh_G(abs(c_sh_G)<1e-14)=0;
+c_r_sh_G(abs(c_r_sh_G)<1e-14)=0;
+c_o_sh_G(abs(c_o_sh_G)<1e-14)=0;
+n_sh_sh_G(abs(n_sh_G)<1e-14)=0;
+g_sh_G(abs(g_sh_G)<1e-14)=0;
+bg_sh_G(abs(bg_sh_G)<1e-14)=0;
+x_sh_G(abs(x_sh_G)<1e-14)=0;
+%no_sh_G(abs(no_sh_G)<1e-14)=0;
+%nr_sh_G(abs(nr_sh_G)<1e-14)=0;
+tax_sh_G(abs(tax_sh_G)<1e-14)=0;
+
+figure()
+
+T = size(c_sh_G ,1);
+t = 1:1:T;
+subplot(3,2,1);
+plot(t',(cSS/ySS)*c_sh_G,'b-', t', g_sh_G, 'r-', t', (xSS/ySS)*x_sh_G, 'g', t', y_sh_G, 'k-',  'LineWidth',2)
+title(['Consumption, Gov. Expen, output, Investment'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Consumption', 'Gov. Expen', 'Investment', 'Output');
+xlim([1 T]);
+grid on;
+
+
+subplot(3,2,3);
+pl=plot(t',w_sh_G, t',infT_sh_G', t',R_sh_G');
+title(['Real Wage, Inflation, Interest Rates'],'FontSize',8,'FontWeight','bold');
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(2).LineWidth = 2;
+pl(2).Color='blue';
+pl(3).LineWidth = 2;
+pl(3).Color='green';
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Real Wages', 'Inflation', 'Interest rates');
+xlim([1 T]);
+grid on;
+ 
+subplot(3,2,2);
+pl= plot(t',n_sh_G')
+title(['Labour'],'FontSize',8,'FontWeight','bold');
+pl(1).Color='red';
+pl(1).LineWidth = 2;
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Total Labour');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,6);
+pl=plot(t',y_sh_G./(g_sh_G(1)));
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+title(['Multiplier'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+xlim([1 T]);
+grid on;
+
+subplot(3,2,4);
+pl=plot(t',tax_sh_G, t', g_sh_G', t',bg_sh_G);
+pl(1).LineWidth = 2;
+pl(1).Color='black';
+pl(1).LineWidth = 2;
+pl(1).Color='blue';
+title(['Lump-sum Taxes and Expenditures'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Taxes', 'Government Expenditure', 'debt');
+xlim([1 T]);
+grid on;
+
+subplot(3,2,5);
+plot(t',(cSS/ySS)*c_sh_G,'b-', t', (cSS/ySS)*c_r_sh_G, 'r-', t', (cSS/ySS)*c_o_sh_G, 'g-')
+title(['Consumption'],'FontSize',8,'FontWeight','bold');
+ylabel('Basis pts. dev.','FontSize',8);
+set(gca,'Fontsize',8);
+legend ('Consumption', 'RoT', 'Ricardian');
+xlim([1 T]);
+grid on;
+
+% subplot(3,2,5);
+% plot(t',bg_sh_G,'b-','LineWidth',2)
+% title(['Change in Public debt/GDP'],'FontSize',8,'FontWeight','bold');
+% ylabel('Basis pts. dev.','FontSize',8);
+% set(gca,'Fontsize',8);
+% xlim([1 T]);
+%grid on;
+
+
+
+% subplot(3,2,5);
+% plot(t',g_t_sh_g_t,'b-','LineWidth',2)
+% title(['Goverment Expenditure'],'FontSize',8,'FontWeight','bold');
+% ylabel('Basis pts. dev.','FontSize',8);
+% set(gca,'Fontsize',8);
+% xlim([1 T]);
+% grid on;
+% 
+% 
+print -dpdf GLS_NonCompetitive.pdf
+
+
+
+%subplot(3,2,1);
+
+
